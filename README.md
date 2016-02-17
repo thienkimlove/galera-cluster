@@ -15,6 +15,21 @@ docker run --detach=true --name node2 -h node2 --link node1:node1 thienkimlove/g
 
 docker run --detach=true --name node3 -h node3 --link node1:node1 thienkimlove/galera-cluster --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://node1
 
+
+#setup mysql for each node :
+
+docker exec -it node1 /bin/bash
+
+mysql_secure_installation
+
+set disallow remote to no.
+
+GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY 'tieungao';
+FLUSH PRIVILEGES;
+
+
+
+
 #test
 docker exec -ti node1 mysql -e 'show status like "wsrep_cluster_size"'
 
