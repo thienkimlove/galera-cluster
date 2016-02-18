@@ -10,7 +10,7 @@ haproxy:
    BALANCE: roundrobin
    STATS_AUTH: "auth:auth"  
 master_node:
-  image: thienkimlove/galera-cluster-v2
+  image: thienkimlove/galera-cluster
   hostname: master_node
   command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://
   environment:
