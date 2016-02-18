@@ -1,0 +1,16 @@
+haproxy:
+  image: haproxy:1.6
+  ports:
+    - "33062:3306"
+  volumes:
+   - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+  links:
+   - master_node
+   - slave_node
+master_node:
+  image: thienkimlove/galera-cluster-v2
+  container_name: master_node
+  command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://
+slave_node:
+  build: .
+  command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://master_node
