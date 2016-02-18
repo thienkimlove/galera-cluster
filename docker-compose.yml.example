@@ -1,16 +1,24 @@
 haproxy:
-  image: haproxy:1.6
+  image: tutum/haproxy
   ports:
-    - "33062:3306"
-  volumes:
-   - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    - "33066:3306"
+    - "8080:1936"
   links:
    - master_node
    - slave_node
+  environment:
+   BALANCE: roundrobin
+   STATS_AUTH: "auth:auth"  
 master_node:
   image: thienkimlove/galera-cluster-v2
-  container_name: master_node
+  hostname: master_node
   command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://
+  environment:
+   TCP_PORTS: 3306
 slave_node:
-  build: .
+  image: thienkimlove/galera-cluster-v2
   command: --wsrep-cluster-name=local-test --wsrep-cluster-address=gcomm://master_node
+  links:
+   - master_node
+  environment:
+    TCP_PORTS: 3306 

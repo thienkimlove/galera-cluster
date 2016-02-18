@@ -1,4 +1,18 @@
-# galera-cluster
+# Using composer to LoadBlancer with tutum/haproxy
+
+TCP_PORTS must be in environment of mysql node.
+
+
+To test using : mysql -uroot -ptieungao -h127.0.0.1 -P33066  -e "select @@hostname;"
+
+
+
+ 
+
+
+
+
+# OLD galera-cluster
 
 # Usage
 
